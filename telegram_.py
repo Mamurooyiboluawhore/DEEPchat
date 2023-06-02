@@ -14,8 +14,7 @@ dispatcher = updater.dispatcher
 
 
 def start(update, context):
-    name = input(str("What's your name? "))
-    update.message.reply_text("Hello {}!\nWelcome to DeepChat")
+    update.message.reply_text("Hello. Welcome to DeepChat")
 
 
 def emycodes(update, context):
