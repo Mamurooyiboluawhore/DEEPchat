@@ -4,7 +4,7 @@
 
 
 from sys import argv
-from telegram import Update
+import telegram
 from telegram.ext import Updater
 
 Token = argv[1]
@@ -19,15 +19,15 @@ def start(update, context):
 
 
 def emycodes(update, context):
-    update.message.reply_text("Click here to learn more about emycodes: https://wwww.emycodes.tech")
+    update.message.reply_text("Click here to learn more about emycodes: https://www.emycodes.tech")
 
 
 def mamuro(update, context):
-    update.message.reply_text("Click here to learn more about emycodes: https://wwww.mamuro.tech")
+    update.message.reply_text("Click here to learn more about emycodes: https://www.mamuro.tech")
 
 
 def niyero(update, context):
-    update.message.reply_text("Click here to learn more about emycodes: https://wwww.niyero.tech")
+    update.message.reply_text("Click here to learn more about emycodes: https://www.niyero.tech")
 
 
 def contact(update, context):
