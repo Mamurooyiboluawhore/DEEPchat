@@ -4,7 +4,7 @@
 
 
 from sys import argv
-import telegram
+from telegram import Update
 from telegram.ext import Updater
 
 Token = argv[1]
