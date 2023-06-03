@@ -1,0 +1,3 @@
+﻿better-profanity==0.7.0
+python-telegram-bot==20.3
+replicate==0.4.0
