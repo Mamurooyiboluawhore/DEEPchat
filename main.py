@@ -11,11 +11,25 @@ logging.basicConfig(
     level=logging.INFO
 )
 
+# Defining Functions
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """
+        This function initializes a conversation with the bot    
+    """
     await context.bot.send_message(chat_id=update.effective_chat.id, text="I'm a bot, please talk to me!")
 
 async def help(update: Update, context: ContextTypes.DEFAULT_TYPE):
-   await context.bot.send_message(chat_id=update.effective_chat.id, text="I'm a bot command, type what I can respond to")
+   """
+        This function guides users on which commands to use
+   """
+   text = """
+
+/start    =>       Starts a Convesation with DeepChat
+/todolist =>       Tells DeepChat to get ready for TodoList Creation
+/help     =>       Guidains command 
+   
+   """
+   await context.bot.send_message(chat_id=update.effective_chat.id, text=text)
 
 if __name__ == "__main__":
     from sys import argv
