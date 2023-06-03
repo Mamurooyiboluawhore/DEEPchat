@@ -53,7 +53,6 @@ if __name__ == "__main__":
     """
     Command Handlers to handle /start, /help, /todolist and (more to come) commands
     """
-
     start_handler = CommandHandler('start', start)
     help_handler = CommandHandler('help', help)
     todolist_handler = CommandHandler('todolist', todolist)
@@ -61,4 +60,5 @@ if __name__ == "__main__":
     application.add_handler(help_handler)
     application.add_handler(todolist)
 
+    # Polling
     application.run_polling()
