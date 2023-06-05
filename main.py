@@ -31,9 +31,9 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 """
    await context.bot.send_message(chat_id=update.effective_chat.id, text=text)
 
-    ################################################################################# 
+    ################################################################################### 
     ##                      Here comes DeepChat's Power                              ##
-    #################################################################################
+    ###################################################################################
 
 
 async def todolist_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
