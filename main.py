@@ -2,6 +2,7 @@
 
 import asyncio
 import logging
+from settings import TELEGRAM_BOT_TOKEN
 from telegram import Update
 from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler
 
@@ -46,9 +47,7 @@ async def todolist_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 if __name__ == "__main__":
-    from sys import argv
-
-    application = ApplicationBuilder().token(argv[1]).build()
+    application = ApplicationBuilder().token(TELEGRAM_BOT_TOKEN).build()
     
     """
     Command Handlers to handle /start, /help, /todolist and (more to come) commands
