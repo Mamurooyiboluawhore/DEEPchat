@@ -8,6 +8,10 @@ logging.basicConfig(
     level=logging.INFO
 )
 
+# Define the states of the conversation
+TASK, DELETE = range(2)
+
+
 # Define the start function
 async def start_bot(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     await context.bot.send_message(chat_id=update.effective_chat.id,
@@ -20,7 +24,7 @@ async def start_bot(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
 # A function to let users create todo
 async def create_task(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    messege_id = update.effective_message.messege_id
+    message_id = update.effective_message.message_id
     message_text = update.effective_message.text
     todo_title = message_text.replace("/new ", "")
     context.user_data[message_id] = {"title": todo_title, "completed": False}
@@ -59,7 +63,7 @@ if __name__ == '__main__':
     application.add_handler(help_handler)
 
     show_handler = CommandHandler('show', show_todo)
-    application.add_handler(help_handler)
+    application.add_handler(show_handler)
 
     application.run_polling()
 
