@@ -18,13 +18,19 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """
     This function initializes a conversation with the bot.... 
     """
-    await context.bot.send_message(chat_id=update.effective_chat.id, text="I'm a bot, please talk to me!")
+    #Declaring firstname
+    first_name = update.message.from_user.first_name
+
+    await context.bot.send_message(chat_id=update.effective_chat.id, text=f"Hello {first_name.split()[0]}\nI'm a bot, please talk to me!")
 
 
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
    """
     This function guides users on which commands to use....
    """
+    #Declaring firstnam
+    # first_name = update.message.from_user.first_name
+
    text = """
 /start    =>       Starts a Convesation with DeepChat
 /todolist =>       Tells DeepChat to get ready for TodoList Creation
@@ -42,6 +48,10 @@ async def todolist_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         This function gets/fetch info from google calender
     
     """
+
+    #Declaring firstnam
+    # first_name = update.message.from_user.first_name
+
     await context.bot.send_message(chat_id=update.effective_chat.id, text="Hello, this is your to-do list")
     pass
 
