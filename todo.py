@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import logging
 from telegram import Update
 from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, filters, MessageHandler, PicklePersistence
