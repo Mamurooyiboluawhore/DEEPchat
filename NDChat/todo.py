@@ -1,7 +1,7 @@
 #import asyncio
 import logging
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
-from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, filters, MessageHandler, PicklePersistence
+from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, CallbackQueryHandler, filters, MessageHandler, PicklePersistence
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -47,18 +47,52 @@ async def help(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 # A function to view todo
 async def show_todo(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    print(update)
+ #   text, reply_markup = parent_todo(context)
     text="Here are the list of your task:\n"
     keyboard = []
     for key, value in context.user_data.items():
+        status_icon = "✔" if value["completed"] else "✖"
+        to_do = value["title"] + " " + status_icon
         keyboard.append(
-                [InlineKeyboardButton(text=value['title'], callback_data=key)]
+                [InlineKeyboardButton(text=to_do, callback_data=key)]
             )
-        text += "- " + value['title'] + " Status: " + str(value['completed']) + "\n"
+        text += "- " + to_do
     reply_markup = InlineKeyboardMarkup(keyboard)
     await context.bot.send_message(chat_id=update.effective_chat.id,
                                    text=f"Your tasks:\n{text}", reply_markup=reply_markup)
 
+#async def parent_todo(context: ContextTypes.DEFAULT_TYPE):
+ #   text="Here are the list of your task:\n"
+  #  keyboard = []
+   # for key, value in context.user_data.items():
+    #    status_icon = "✔" if value["completed"] else "✖"
+     #   to_do = value["title"] + " " + status_icon
+      #  keyboard.append(
+       #         [InlineKeyboardButton(text=to_do, callback_data=key)]
+        #    )
+       # text += "- " + to_do
+   # reply_markup = InlineKeyboardMarkup(keyboard)
+    #return await text, reply_markup
+
+async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    query = update.callback_query
+    toDo_id = int(query.data)
+    task_status = context.user_data[toDo_id]['completed']
+    context.user_data[toDo_id]['completed'] = not task_status
+    #text, reply_markup = parent_todo(context)
+    text="Here are the list of your task:\n"
+    keyboard = []
+    for key, value in context.user_data.items():
+        status_icon = "✔" if value["completed"] else "✖"
+        to_do = value["title"] + " " + status_icon
+        keyboard.append(
+                [InlineKeyboardButton(text=to_do, callback_data=key)]
+            )
+        text += "- " + to_do
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    query.answer(text='Status successfully updated')
+    await query.edit_message_text(text=text, reply_markup=reply_markup)
+    
 if __name__ == '__main__':
     my_persistence =PicklePersistence(filepath='todo')
     application = ApplicationBuilder().token('6238081820:AAHPbErkU-33_oWkWasfUF4OfamSlxQpxts').persistence(my_persistence).build()
@@ -74,6 +108,8 @@ if __name__ == '__main__':
 
     show_handler = CommandHandler('list', show_todo)
     application.add_handler(show_handler)
+
+    application.add_handler(CallbackQueryHandler(button))
 
     application.run_polling(poll_interval=5)
 
