@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import render_template, redirect, request
 from DeepChatApp import app
 from DeepChatApp.models import User, Todo
 
@@ -12,12 +12,25 @@ def login():
 
 @app.route('/registeration')
 def registeration():
-	return render_template("registeration")
+	return render_template("registeration.html")
 	
-@app.route('/')
+@app.route('/', methods=["GET", "POST"])
 def Home():
-        return render_template("index.html")
+    if request.method == 'POST':
+        task_content = request.form['content']
+        new_task = Todo(content=task_content)
 
-@app.route('/main')
+        try:
+            db.session.add(new_task)
+            db.session.commit()
+            return redirect('/')
+        except:
+            return 'There was an error while adding the task'
+
+   else:
+        tasks = Todo.query.all()
+        return render_template("index.html", tasks=task)
+
+@app.route('/about')
 def about():
 	return render_template("about.html")
