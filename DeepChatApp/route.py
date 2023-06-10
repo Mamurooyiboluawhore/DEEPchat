@@ -4,7 +4,7 @@ from DeepChatApp.models import User, Todo
 
 
 @app.route('/landingP')
-def landingP
+def landingP():
 	return render_template("landP.html")
 @app.route('/login')
 def login():
@@ -20,4 +20,4 @@ def Home():
 
 @app.route('/main')
 def about():
-	return render_template("about.html)
+	return render_template("about.html")
