@@ -61,7 +61,7 @@ async def show_todo(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 if __name__ == '__main__':
     my_persistence =PicklePersistence(filepath='todo')
-    application = ApplicationBuilder().token('6238081820:AAHPbErkU-33_oWkWasfUF4OfamSlxQpxts').persistence(my_persistence).build()
+    application = ApplicationBuilder().token('').persistence(my_persistence).build()
 
     create_handler = CommandHandler('new', create_task)
     application.add_handler(create_handler)
