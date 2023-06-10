@@ -1,7 +1,7 @@
+#import asyncio
 import logging
-from telegram import Update
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, filters, MessageHandler, PicklePersistence
-from setting import CUSTOM_REPLIES
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -25,17 +25,20 @@ async def start_bot(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 # A function to let users create todo
 async def create_task(update: Update, context: ContextTypes.DEFAULT_TYPE):
     message_id = update.effective_message.message_id
+    print(message_id)
     message_text = update.effective_message.text
+    print(message_text)
     todo_title = message_text.replace("/new ", "")
+    print(todo_title)
     context.user_data[message_id] = {"title": todo_title, "completed": False}
+    print(context.user_data)
     await context.bot.send_message(chat_id=update.effective_chat.id, text="Todo successfully created")
 
 
 async def help(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = """
     Available commands:
-    /start => start bot
-    /create_task => creat todo
+    /start => start bot:
     /show_todo => show list of todos
     /new => Make a new Todo
     /list => To show list of Todos
@@ -44,10 +47,17 @@ async def help(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 # A function to view todo
 async def show_todo(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    text="Here are the list of todos:\n"
+    print(update)
+    text="Here are the list of your task:\n"
+    keyboard = []
     for key, value in context.user_data.items():
-        text += "- " + value
-    await context.bot.send_message(chat_id=update.effective_chat.id, text=text)
+        keyboard.append(
+                [InlineKeyboardButton(text=value['title'], callback_data=key)]
+            )
+        text += "- " + value['title'] + " Status: " + str(value['completed']) + "\n"
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    await context.bot.send_message(chat_id=update.effective_chat.id,
+                                   text=f"Your tasks:\n{text}", reply_markup=reply_markup)
 
 if __name__ == '__main__':
     my_persistence =PicklePersistence(filepath='todo')
@@ -62,8 +72,8 @@ if __name__ == '__main__':
     help_handler = CommandHandler('help', help)
     application.add_handler(help_handler)
 
-    show_handler = CommandHandler('show', show_todo)
+    show_handler = CommandHandler('list', show_todo)
     application.add_handler(show_handler)
 
-    application.run_polling()
+    application.run_polling(poll_interval=5)
 
