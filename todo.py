@@ -3,7 +3,7 @@
 import logging
 from telegram import Update
 from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, filters, MessageHandler, PicklePersistence
-from settings import CUSTOM_REPLIES
+from setting import CUSTOM_REPLIES
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -16,7 +16,6 @@ TASK, DELETE = range(2)
 
 # Define the start function
 async def start_bot(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    """ start_bot: to start Bot """
     await context.bot.send_message(chat_id=update.effective_chat.id,
                      text='Hi! This is your todo list. You can add tasks by sending me messages.\n'
                                         'To see your tasks, use the /tasks command.\n'
@@ -27,9 +26,6 @@ async def start_bot(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
 # A function to let users create todo
 async def create_task(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """"
-    Create_task: To create Todo
-    """
     message_id = update.effective_message.message_id
     message_text = update.effective_message.text
     todo_title = message_text.replace("/new ", "")
