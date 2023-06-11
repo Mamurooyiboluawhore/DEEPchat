@@ -3,7 +3,7 @@
 import logging
 from telegram import Update
 from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, filters, MessageHandler, PicklePersistence
-from settings import CUSTOM_REPLIES
+from settings import  TELEGRAM_BOT_TOKEN, CUSTOM_REPLIES
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -57,7 +57,7 @@ async def show_todo(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 if __name__ == '__main__':
     my_persistence =PicklePersistence(filepath='todo')
-    application = ApplicationBuilder().token('6238081820:AAHPbErkU-33_oWkWasfUF4OfamSlxQpxts').persistence(my_persistence).build()
+    application = ApplicationBuilder().token(TELEGRAM_BOT_TOKEN).persistence(my_persistence).build()
 
     create_handler = CommandHandler('new', create_task)
     application.add_handler(create_handler)
