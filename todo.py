@@ -47,7 +47,6 @@ async def help(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 # A function to view todo
 async def show_todo(update: Update, context: ContextTypes.DEFAULT_TYPE):
- #   text, reply_markup = parent_todo(context)
     text="Here are the list of your task:\n"
     keyboard = []
     for key, value in context.user_data.items():
@@ -61,25 +60,11 @@ async def show_todo(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await context.bot.send_message(chat_id=update.effective_chat.id,
                                    text=f"Your tasks:\n{text}", reply_markup=reply_markup)
 
-#async def parent_todo(context: ContextTypes.DEFAULT_TYPE):
- #   text="Here are the list of your task:\n"
-  #  keyboard = []
-   # for key, value in context.user_data.items():
-    #    status_icon = "✔" if value["completed"] else "✖"
-     #   to_do = value["title"] + " " + status_icon
-      #  keyboard.append(
-       #         [InlineKeyboardButton(text=to_do, callback_data=key)]
-        #    )
-       # text += "- " + to_do
-   # reply_markup = InlineKeyboardMarkup(keyboard)
-    #return await text, reply_markup
-
 async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     toDo_id = int(query.data)
     task_status = context.user_data[toDo_id]['completed']
     context.user_data[toDo_id]['completed'] = not task_status
-    #text, reply_markup = parent_todo(context)
     text="Here are the list of your task:\n"
     keyboard = []
     for key, value in context.user_data.items():
