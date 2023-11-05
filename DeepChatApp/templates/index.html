@@ -1,0 +1,33 @@
+{% extends 'parent.html' %}
+
+{% block chat %}
+
+{% endblock %}
+
+{% block body %}
+
+    <p> Hi, Adeniyi; Welcome to DEEPchat </p>
+    <p> What's your schedule for the day? </p>
+    <table>
+	    <tr>
+		<th>Task</th>
+		<th>Actions</th>
+	    </tr>
+
+	    {% for task in tasks %}
+	    <tr>
+		<td>{{ task.content }}</td>
+		<td>
+		    <a href="">Delete</a> <br>
+		    <a href="">Update</a>
+		</td>
+	   </tr>
+	   {% endfor %}
+    <table>
+
+    <form action="/" method="POST">
+        <input type="text" name="content" id="content">
+        <input type="submit" value="Add Task">
+</form>
+
+{% endblock %}
